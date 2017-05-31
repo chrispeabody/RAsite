@@ -16,11 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from RAsite.views import hello_world, root_page, random_number
-
+from RAsite import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', root_page),
-    url(r'^helloworld$', hello_world),
-    url(r'^random/(\d+)/(\d+)/$', random_number)
+    url(r'^$', views.index),
+    url(r'^about/$', views.about),
 ]
