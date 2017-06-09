@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}New Blog{% endblock %}
+{% block navtitle %}New Blog{% endblock %}
+
+{% block content %}
+
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading">Create a new blog post</h1>
+            <hr>
+
+            <form action="SubmitNewBlog/" method="post" class = "form-horizontal"> {% csrf_token %}
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Blog title</span>
+                <input name="name" type="text" class="form-control" placeholder="My Example" aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">Blog text</span>
+                <input name="description" type="text" class="form-control" placeholder="This is my blog post." aria-describedby="basic-addon2">
+            </div>
+            <br>
+            <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</header>
+
+{% endblock %}

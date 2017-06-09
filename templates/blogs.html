@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Blogs{% endblock %}
+{% block navtitle %}Blogs{% endblock %}
+
+{% block content %}
+
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading">Current Blogs Online</h1>
+            <hr>
+            {% for blog in blogs %}
+                <a href="#{{ blog.id }}" class="btn btn-primary btn-xl page-scroll">{{ blog.name }}</a>
+                <br><br>
+            {% endfor %}
+        </div>
+    </div>
+</header>
+
+{% for blog in blogs %}
+
+    <section class="bg-primary" id="{{ blog.id }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">{{ blog.name }}</h2>
+                    <hr class="light">
+                    <p class="text-faded">{{ blog.description }}</p>
+                    <a href="#page-top" class="page-scroll btn btn-default btn-xl sr-button">Back to top</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endfor %}
+
+{% endblock %}

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>RAsite | {% block title %}{% endblock %}</title>
+    <title>RAsite | {% block title %}{% endblock %} </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -44,23 +44,23 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="/">Go Home</a>
+                <a class="navbar-brand page-scroll"  href="/">
+                    <span type="button" class="glyphicon glyphicon-home" aria-label="Home"></span>
+                </a>
+                <a class="navbar-brand page-scroll" href="#page-top">{% block navtitle %}{% endblock %}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <a class="page-scroll" href="/blogapp/">Blogs</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/blogapp/new">New Blog</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="/about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Services</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
