@@ -25,7 +25,7 @@ SECRET_KEY = 'pv+!z_k!_edjeim50k6_&gggs2s4&%9!cxk93513uccwr%5!fw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.106.23.59']
+ALLOWED_HOSTS = ['localhost', '10.106.23.59']
 
 
 # Application definition
@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blogapp.apps.BlogappConfig'
+    'blogapp.apps.BlogappConfig',
+    'CSPtool.apps.CSPtoolConfig'
 ]
 
 MIDDLEWARE = [
