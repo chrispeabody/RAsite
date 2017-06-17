@@ -2,7 +2,16 @@
 {% load static %}
 
 {% block title %}Home{% endblock %}
-{% block navtitle %}Home{% endblock %}
+
+{% block navtitle %}
+    {% if request.user.is_authenticated %}
+        Hello {{request.user.username}}
+    {% else %}
+        Home
+    {% endif %}
+{% endblock %}
+
+
 
 {% block content %}
     <section class="bg-primary" id="about">

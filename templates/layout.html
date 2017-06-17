@@ -62,6 +62,19 @@
                     <li>
                         <a class="page-scroll" href="/about">About</a>
                     </li>
+                    
+                     {% if request.user.is_authenticated %}
+                        <li>
+                            <a class="page-scroll" href="/blogapp/logout/">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="page-scroll" href="/blogapp/registerForm/">Register</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="/blogapp/loginForm/">Login</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

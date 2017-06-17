@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+{% block navtitle %}Login{% endblock %}
+
+{% block content %}
+
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading">Logging In</h1>
+            <hr>
+
+            <form action="/blogapp/login/" method="post" class = "form-horizontal"> {% csrf_token %}
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Username</span>
+                <input name="username" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">Password</span>
+                <input name="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon2">
+            </div>
+            <br>
+            <button type="submit" value="Submit" class="btn btn-default">Login</button>
+            </form>
+
+        </div>
+    </div>
+</header>
+
+{% endblock %}
