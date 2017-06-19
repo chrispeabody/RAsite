@@ -16,8 +16,8 @@ class App(models.Model):
 		on_delete=models.CASCADE,
 	)
 
-	LocX = models.FloatField()
-	LocY = models.FloatField()
+	locX = models.FloatField()
+	locY = models.FloatField()
 
 	# ADD OTHER DIAGNOSTIC INFO #
 
@@ -42,8 +42,8 @@ class CSPLoc(models.Model):
 		on_delete=models.CASCADE
 	)
 
-	LocX = models.FloatField()
-	LocY = models.FloatField()
+	locX = models.FloatField()
+	locY = models.FloatField()
 
 	# Perhaps modify this to hold private user locations as well
 
@@ -81,6 +81,19 @@ class Review(models.Model):
 	# When was the review made?
 	dateMade = models.DateField(auto_now=False, auto_now_add=False)
 
+# Stores already calculated trust scores
+class TrustScore(models.Model):
+	# What user/app is this score for?
+	user = models.ForeignKey(
+		User, # If we try to exapand user, this could cause issues?
+		on_delete=models.CASCADE,
+	)
 
+	# What CSP is this score for?
+	CSP = models.ForeignKey(
+		'CSP',
+		on_delete=models.CASCADE
+	)
 
-
+	# What is the value of the score?
+	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])

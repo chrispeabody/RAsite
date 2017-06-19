@@ -23,4 +23,9 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^about/$', views.about),
     url(r'^blogapp/', include('blogapp.urls')),
+    url(r'^registerForm/$', views.registerForm),
+    url(r'^registerUser/$', views.registerUser),
+    url(r'^logout/$', views.loggingout),
+    url(r'^loginForm/$', views.logginginForm),
+    url(r'^login/$', views.loggingin),
 ]

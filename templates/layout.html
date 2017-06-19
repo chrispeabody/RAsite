@@ -65,14 +65,14 @@
                     
                      {% if request.user.is_authenticated %}
                         <li>
-                            <a class="page-scroll" href="/blogapp/logout/">Logout</a>
+                            <a class="page-scroll" href="/logout/">Logout</a>
                         </li>
                     {% else %}
                         <li>
-                            <a class="page-scroll" href="/blogapp/registerForm/">Register</a>
+                            <a class="page-scroll" href="/registerForm/">Register</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="/blogapp/loginForm/">Login</a>
+                            <a class="page-scroll" href="/loginForm/">Login</a>
                         </li>
                     {% endif %}
                 </ul>
