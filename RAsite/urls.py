@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^logout/$', views.loggingout),
     url(r'^loginForm/$', views.logginginForm),
     url(r'^login/$', views.loggingin),
+    url(r'^crawl/$', views.crawl),
 ]

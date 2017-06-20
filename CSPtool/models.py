@@ -97,3 +97,7 @@ class TrustScore(models.Model):
 
 	# What is the value of the score?
 	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
+
+class MainSpider(scrapy.Spider):
+	# This is where you put in the spider code
+	# To add to the database you want, simply set up as we do previously and set the variables equal to the equivalent
