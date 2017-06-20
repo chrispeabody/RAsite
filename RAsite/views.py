@@ -2,9 +2,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
-from django.views.generic import View
 from .forms import UserForm
-from CSPtool.models import MainSpider
+from .Spiders import ReviewSpider
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
 
@@ -19,10 +18,12 @@ def about(request):
 def crawl(request):
 	runner = CrawlerRunner()
 
-	d = runner.crawl(MainSpider)
+	d = runner.crawl(ReviewSpider)
 	d.addBoth(lambda _: reactor.stop())
 	reactor.run() # the script will block here until the crawling is finished
 	redirect('/')
+
+	return render(request, 'index.html')
 
 ######################
 ### ACCOUNT SYSTEM ###
