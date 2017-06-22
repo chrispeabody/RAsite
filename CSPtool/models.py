@@ -97,3 +97,5 @@ class TrustScore(models.Model):
 
 	# What is the value of the score?
 	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
+
+	

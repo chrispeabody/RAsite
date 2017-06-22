@@ -6,6 +6,7 @@ from .forms import UserForm
 from .Spiders import ReviewSpider
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
+from scrapy.utils.log import configure_logging
 
 def index(request):
 	return render(request, 'index.html')
@@ -16,6 +17,7 @@ def about(request):
 # This is what is used to call the spider you made and execute it
 # One thing to look out for is how many times it adds to the database (Make sure correct amount of entries)
 def crawl(request):
+	configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
 	runner = CrawlerRunner()
 
 	d = runner.crawl(ReviewSpider)

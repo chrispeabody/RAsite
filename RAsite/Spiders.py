@@ -1,12 +1,12 @@
 import scrapy
-from RASite.SpiderItems import CloudreviewsItem
-from scrapy.spider import BaseSpider
+from scrapy.spiders import BaseSpider
 from scrapy.selector import Selector
-from scrapy.contrib.spiders import Rule
+from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
-from CSPtool.models import Rating, Review
+from CSPtool.models import Rating, Review, CSP
+from django.db import models
 
-class ReviewSpider(BaseSpider):
+class ReviewSpider(scrapy.Spider):
     name = "Reviews"
     allowed_domains = ["clutch.co"]
     #allowed_domains = ["hostingreviews.io"]
@@ -21,15 +21,18 @@ class ReviewSpider(BaseSpider):
     def parse(self, response):
         #hxs = Selector(response)
         for sel in response.xpath('//div[@class="review-border only-1-line"]/div[@class="clearfix"]'):
-            rev = Review()
-            rat = Rating()
+            derp = CSP(name = "Amazon", fDowntime = 50, uDowntime = 50, redundVal = 1)
+            derp.save()
 
-            rat['value']=sel.xpath('div[@class ="col-24 review-col"]/div/div/div/div/div[@class="field field-name-field-fdb-overall-rating field-type-fivestar field-label-hidden"]/div/div/div/div/div/p/span/text()').extract()
-            rev['plaintext'] = sel.xpath('div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract()
-            rat['CSP'] = response.xpath('//h1/text()').extract()
-            rev['CSP'] = rat['CSP']
-            rat['dateMade'] = sel.xpath('div[@class="col-52 project-col"]/h5[@class="date hidden-xs"]/text()').extract()
-            rev['dateMade'] = rat['dateMade']
+            rev = Review(CSP = derp, plaintext = sel.xpath('div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract())
+            rat = Rating(CSP = derp,type = 'Derp', value = 1.0, source = 'Derp')
+
+            # rat['value']= 1 #sel.xpath('div[@class ="col-24 review-col"]/div/div/div/div/div[@class="field field-name-field-fdb-overall-rating field-type-fivestar field-label-hidden"]/div/div/div/div/div/p/span/text()').extract()
+            # rev['plaintext'] = sel.xpath('div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract()
+            # rat['CSP'] = response.xpath('//h1/text()').extract()
+            # rev['CSP'] = rat['CSP']
+            # rat['dateMade'] = '2000-12-12'#sel.xpath('div[@class="col-52 project-col"]/h5[@class="date hidden-xs"]/text()').extract()
+            # rev['dateMade'] = rat['dateMade']
             rat.save()
             rev.save()
             # yield rat
