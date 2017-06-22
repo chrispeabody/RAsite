@@ -25,7 +25,7 @@ class ReviewSpider(scrapy.Spider):
             derp.save()
 
             rev = Review(CSP = derp, plaintext = sel.xpath('div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract())
-            rat = Rating(CSP = derp,type = 'Derp', value = 1.0, source = 'Derp')
+            rat = Rating(CSP = derp,type = 'Derp', value = 1.0, source = 'Derp', datemade = )
 
             # rat['value']= 1 #sel.xpath('div[@class ="col-24 review-col"]/div/div/div/div/div[@class="field field-name-field-fdb-overall-rating field-type-fivestar field-label-hidden"]/div/div/div/div/div/p/span/text()').extract()
             # rev['plaintext'] = sel.xpath('div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract()

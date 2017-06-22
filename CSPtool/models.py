@@ -23,7 +23,7 @@ class App(models.Model):
 
 # List of all CSP's and their information
 class CSP(models.Model):
-	name = models.CharField(max_length=20)
+	name = models.CharField(max_length=40, primary_key = True)
 
 	fDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
 	uDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
@@ -65,7 +65,7 @@ class Rating(models.Model):
 	source = models.CharField(max_length=100)
 
 	# When was the rating made?
-	dateMade = models.DateField(auto_now=False, auto_now_add=False)
+	dateMade = models.DateField(auto_now=False, auto_now_add=False, null = True)
 
 # Holds any textual feedback for a CSP
 class Review(models.Model):
@@ -79,7 +79,7 @@ class Review(models.Model):
 	plaintext = models.CharField(max_length=2000) # Adjust size?
 
 	# When was the review made?
-	dateMade = models.DateField(auto_now=False, auto_now_add=False)
+	dateMade = models.DateField(auto_now=False, auto_now_add=False, null = True)
 
 # Stores already calculated trust scores
 class TrustScore(models.Model):
