@@ -15,7 +15,6 @@ def about(request):
 	return render(request, 'about.html')
 
 # This is what is used to call the spider you made and execute it
-# One thing to look out for is how many times it adds to the database (Make sure correct amount of entries)
 def crawl(request):
 	configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
 	runner = CrawlerRunner()
@@ -23,7 +22,6 @@ def crawl(request):
 	d = runner.crawl(ReviewSpider)
 	d.addBoth(lambda _: reactor.stop())
 	reactor.run() # the script will block here until the crawling is finished
-	redirect('/')
 
 	return render(request, 'index.html')
 

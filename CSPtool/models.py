@@ -25,10 +25,13 @@ class App(models.Model):
 class CSP(models.Model):
 	name = models.CharField(max_length=40, primary_key = True)
 
-	fDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
-	uDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
+	fDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)], null = True)
+	uDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)], null = True)
 
-	redundVal = models.IntegerField(validators = [MinValueValidator(1)])
+	redundVal = models.IntegerField(validators = [MinValueValidator(1)], null = True)
+
+	def __str__(self):
+		return self.name
 
 	# ADD #
 	# Privacy policy info
@@ -45,10 +48,16 @@ class CSPLoc(models.Model):
 	locX = models.FloatField()
 	locY = models.FloatField()
 
+	def __str__(self):
+		return self.name
+
 	# Perhaps modify this to hold private user locations as well
 
 # Holds any numerical type rating for a CSP
 class Rating(models.Model):
+	# The unique id of the rating. We steal it for use in our database too, so we don't duplicate ratings
+	idNum = models.IntegerField(unique=True, null=False)
+
 	# What CSP is this rating about?
 	CSP = models.ForeignKey(
 		'CSP',
@@ -62,13 +71,19 @@ class Rating(models.Model):
 	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
 
 	# Where did we get the rating?
-	source = models.CharField(max_length=100)
+	source = models.CharField(max_length=100, null = True)
 
 	# When was the rating made?
 	dateMade = models.DateField(auto_now=False, auto_now_add=False, null = True)
 
+	# Where was the rating made?
+	locMade = models.CharField(max_length=100, null = True)
+
 # Holds any textual feedback for a CSP
 class Review(models.Model):
+	# The unique id of the review. We steal it for use in our database too, so we don't duplicate reviews
+	idNum = models.IntegerField(unique=True, null=False)
+
 	# What CSP is this review about?
 	CSP = models.ForeignKey(
 		'CSP',
@@ -76,10 +91,16 @@ class Review(models.Model):
 	)
 
 	# The review itself
-	plaintext = models.CharField(max_length=2000) # Adjust size?
+	plaintext = models.CharField(max_length=2000, null = True) # Adjust size?
+
+	# Where did we get the review?
+	source = models.CharField(max_length=100, null = True)
 
 	# When was the review made?
 	dateMade = models.DateField(auto_now=False, auto_now_add=False, null = True)
+
+	# Where was the review made?
+	locMade = models.CharField(max_length=100, null = True)
 
 # Stores already calculated trust scores
 class TrustScore(models.Model):

@@ -7,10 +7,10 @@ class Test(models.Model):
     
     description = models.CharField(max_length=4000)
 
-class Note(models.Model):
-    title = models.CharField(max_length=30)
-
-    userid = models.IntegerField()
-    
-    description = models.CharField(max_length=4000)
+#class Note(models.Model):
+#    title = models.CharField(max_length=30)
+#
+#    userid = models.IntegerField()
+#    
+#    description = models.CharField(max_length=4000)
 
