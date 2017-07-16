@@ -7,6 +7,87 @@ from CSPtool.models import Rating, Review, CSP
 from django.db import models
 import datetime
 
+# Opinion mining imports
+from nltk.sentiment import SentimentAnalyzer
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.corpus import subjectivity
+from nltk.sentiment.util import *
+
+def updateAverages():
+    # -------------------------------------------- #
+    # Apply opinion mining and update CSP database #
+    # -------------------------------------------- #
+
+    # Perhaps make this part happen right before the score is to be calculated?
+    # Might be better considering users can input new reviews without this
+    # function running.
+
+    # get a list of CSP names #
+    # for each csp #
+        # get a list of reviews for that csp #
+        # create a list for the opinion values
+        # for each review #
+            # calculate opinion values
+            # store opinion values in the list
+        # average all opinion values
+        # store averages in database for CSP
+
+    SIA = SentimentIntensityAnalyzer()
+
+    # below code follows above psuedocode #
+    allCSPs = CSP.objects.all()
+    for csp in allCSPs:
+        # For reviews #
+        revList = Review.objects.filter(CSP = csp)
+        opinList = []
+        for rev in revList:
+            opinDict = SIA.polarity_scores(rev.plaintext)
+            opinList.append(opinDict)
+
+        POS = 0
+        NEU = 0
+        NEG = 0
+        totOpin = len(opinList)
+
+        if totOpin == 0:
+            print("### No reviews, cannot divide by zero. ###")
+            AVGPOS = None
+            AVGNEU = None
+            AVGNEG = None
+        else:
+            for opinion in opinList:
+                POS += opinion['pos']
+                NEU += opinion['neu']
+                NEG += opinion['neg']
+
+            AVGPOS = POS / totOpin
+            AVGNEU = NEU / totOpin
+            AVGNEG = NEG / totOpin
+
+            csp.opPositive = AVGPOS
+            csp.opNeutral = AVGNEU
+            csp.opNegative = AVGNEG
+
+        # For ratings #
+        ratList = Rating.objects.filter(CSP = csp)
+        numRatings = len(ratList)
+
+        if numRatings == 0:
+            print("### No ratings, cannot divide by zero. ###")
+            AVGRAT = None
+        else:
+            sumVal = 0
+
+            for rating in ratList:
+                sumVal += rating.value
+
+            AVGRAT = sumVal / numRatings
+            csp.avgRating = AVGRAT
+
+        csp.save()
+
+    return
+
 class ReviewSpider(scrapy.Spider):
     name = "Reviews"
     allowed_domains = ["clutch.co"]
@@ -42,17 +123,32 @@ class ReviewSpider(scrapy.Spider):
             if CSP.objects.filter(name=CSPname).exists():
                 thisCSP = CSP.objects.get(name=CSPname)
             else:
-                thisCSP = CSP(name = CSPname)
+                codenumber = CSP.objects.count()
+                codeletter = chr(65+codenumber)
+                codestring = "Cloud Provider "+codeletter
+                thisCSP = CSP(name = CSPname, codename = codestring)
                 thisCSP.save()
 
             # Create the new review and rating
             rev = Review(idNum = idNumber, CSP = thisCSP)
-            rat = Rating(idNum = idNumber, CSP = thisCSP)
+            rat = Rating(idNum = idNumber, CSP = thisCSP, type='overall')
 
-            # Get the review text and put in the review
-            reviewtext = sel.xpath('div[@class="row row-custom "]/div/div/div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract()
-            reviewtext = reviewtext[0].replace('\"','')
-            rev.plaintext = reviewtext
+            # Grab the full review text first
+            reviewtext = sel.xpath('div[@class="row group-row-3 full-review"]/div/div/div[@class="row row-custom __relative"]/div[@class="col-56"]/div/div/div/div/div/p/text()').extract()
+            if len(reviewtext) > 1:
+                # concat the full list together
+                fulltext = ""
+                for i in range(len(reviewtext)):
+                    fulltext += reviewtext[i]
+                    if i != len(reviewtext) - 1:
+                        fulltext += " "
+                rev.plaintext = fulltext
+            else:
+                # just add the summary text instead
+                reviewtext = sel.xpath('div[@class="row row-custom "]/div/div/div[@class="col-52 project-col"]/h2[@class="hidden-xs"]/div[@class="field field-name-field-fdb-client-quote field-type-text-long field-label-hidden"]/div/div/p/text()').extract()
+                reviewtext = reviewtext[0].replace('\"','')
+
+                rev.plaintext = reviewtext
 
             # Get the date and put it in the rating AND the review
             datestring = sel.xpath('div[@class ="row row-custom "]/div/div/div[@class="col-52 project-col"]/h5[@class="date hidden-xs"]/text()').extract()
@@ -68,7 +164,7 @@ class ReviewSpider(scrapy.Spider):
                 rat.locMade = locstring
 
             starsNum = sel.xpath('div[@class="row row-custom "]/div/div/div[@class ="col-24 review-col"]/div/div/div/div/div[@class="field field-name-field-fdb-overall-rating field-type-fivestar field-label-hidden"]/div/div/div/div/div/p/span/text()').extract()
-            ratingPercent = (float(starsNum[0])/5.0)*100
+            ratingPercent = (float(starsNum[0])/5.0)
             rat.value = ratingPercent
 
             rat.save()
@@ -81,4 +177,6 @@ class ReviewSpider(scrapy.Spider):
             next_href = nextpage_url[0]
             nextpage_url = 'https://clutch.co' + next_href
             request = scrapy.Request(url = nextpage_url)
-            yield request 
+            yield request
+
+        updateAverages()

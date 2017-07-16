@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Results{% endblock %}
+{% block navtitle %}Results{% endblock %}
+
+{% block content %}
+
+<header>
+    <style>
+        .ourNodeClass {
+            background-color: #AA2222;
+            border-radius: 8px;
+            border: 0;
+        }
+        .ourSelectedNodeClass {
+            background-color: #CC3333;
+            border-radius: 8px;
+            border: 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {packages:["orgchart"]});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Node');
+            data.addColumn('string', 'Parent');
+            data.addColumn('string', 'ToolTip');
+
+            // For each orgchart box, provide the name, manager, and tooltip to show.
+            data.addRows([
+                [{v:'Trust', f:'Trust [{{ trust }}]'}, '', 'Trust Score'],
+                [{v:'Cost', f:'Cost [{{ cost }}]'}, 'Trust', 'Cost Score'],
+                    [{v:'IaaS', f:'IaaS [{{ iaas }}]'}, 'Cost', 'Infrustructure as a Service Score'],
+                        [{v:'Number of Cores', f:'Number of Cores [{{ numCores }}]'}, 'IaaS', 'Number of Cores Score'],
+                        [{v:'Disk I/O', f:'[{{ diskIO }}]'}, 'IaaS', 'Disk I/O Score'],
+                        [{v:'Storage Size', f:'Storage Size [{{ storeSize }}]'}, 'IaaS', 'Storage Size Score'],
+                        [{v:'OS1', f:'OS [{{ OS }}]'}, 'IaaS', 'OS Score'],
+                    [{v:'PaaS', f:'PaaS [{{ paas }}]'}, 'Cost', 'Platform as a Service Score'],
+                        [{v:'OS2', f:'OS [{{ OS }}]'}, 'PaaS', 'OS Score'],
+                        [{v:'Bandwidth', f:'Bandwidth [{{ bandwidth }}]'}, 'PaaS', 'Bandwidth Score'],
+                    [{v:'SaaS', f:'SaaS [{{ saas }}]'}, 'Cost', 'Software as a Service Score'],
+                        [{v:'Usage Based', f:'Usage Based [{{ usageBased }}]'}, 'SaaS', 'Usage Based Score'],
+                            [{v:'Data Consumed', f:'Data Consumed [{{ dataConsumed }}]'}, 'Usage Based', 'dataConsumed Score'],
+                            [{v:'Transactions Processed', f:'Transactions Processed [{{ transProc }}]'}, 'Usage Based', 'Transactions Processed Score'],
+                            [{v:'API Requests', f:'API Requests [{{ APIreq }}]'}, 'Usage Based', 'API Requests Score'],
+                        [{v:'Tiered Based', f:'Tiered Based [{{ tieredBased }}]'}, 'SaaS', 'Tiered Based Score'],
+                [{v:'Network QoS', f:'Network QoS [{{ QoS }}]'}, 'Trust', 'Network Quality of Service Score'],
+                    [{v:'Throughput', f:'Throughput [{{ throughput }}]'}, 'Network QoS', 'Throughput Score'],
+                        [{v:'VM Type', f:'VM Type [{{ VMtype }}]'}, 'Throughput', 'VM Type Score'],
+                        [{v:'VM Size', f:'VM Size [{{ VMsize }}]'}, 'Throughput', 'VM Size Score'],
+                        [{v:'Network Bandwidth', f:'Network Bandwidth [{{ netBandwidth }}]'}, 'Throughput', 'Network Bandwidth Score'],
+                        [{v:'Multi-Tenancy', f:'Multi-Tenancy [{{ multiTen }}]'}, 'Throughput', 'Multi-Tenancy Score'],
+                    [{v:'Performance', f:'Performance [{{ performance }}]'}, 'Network QoS', 'Performance Score'],
+                        [{v:'Global Latency', f:'Global Latency [{{ globLat }}]'}, 'Performance', 'Global Latency Score'],
+                        [{v:'Total Runtime', f:'Total Runtime [{{ totRuntime }}]'}, 'Performance', 'Total Runtime Score'],
+                        [{v:'Response Time', f:'Response Time [{{ responseTime }}]'}, 'Performance', 'Response Time Score'],
+                            [{v:'Uplink', f:'Uplink [{{ uplink }}]'}, 'Response Time', 'Uplink Score'],
+                            [{v:'Downlink', f:'Downlink [{{ downlink }}]'}, 'Response Time', 'Downlink Score'],
+                            [{v:'Latency', f:'Latency [{{ latency }}]'}, 'Response Time', 'Latency Score'],
+                        [{v:'CPU Usage', f:'CPU Usage [{{ CPUusage }}]'}, 'Performance', 'CPU Usage Score'],
+                    [{v:'Availability', f:'Availability [{{ availability }}]'}, 'Network QoS', 'Availability Score'],
+                        [{v:'Uptime', f:'Uptime [{{ uptime }}]'}, 'Availability', 'Uptime Score'],
+                        [{v:'Location', f:'Location [{{ location }}]'}, 'Availability', 'Location Score'],
+                        [{v:'Number of Outages', f:'Number of Outages [{{ numOutages }}]'}, 'Availability', 'Number of Outages Score'],
+                [{v:'User QoE', f:'User QoE [{{ QoS }}]'}, 'Trust', 'User Quality of Experience Score'],
+                [{v:'Cloud Security', f:'Cloud Security [{{ security }}]'}, 'Trust', 'Cloud Security Score']
+            ]);
+
+            // Create the chart.
+            var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            var options = {allowHtml:true, nodeClass:'ourNodeClass', selectedNodeClass:'ourSelectedNodeClass',
+                allowCollapse:true}
+            chart.draw(data, options);
+        }
+    </script>
+
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading">Results</h1>
+            <hr>
+
+            <div id="chart_div"></div>
+
+        </div>
+    </div>
+</header>
+
+{% endblock %}

@@ -28,5 +28,11 @@ urlpatterns = [
     url(r'^logout/$', views.loggingout),
     url(r'^loginForm/$', views.logginginForm),
     url(r'^login/$', views.loggingin),
-    url(r'^crawl/$', views.crawl),
+    url(r'^aggReviews/$', views.aggReviews),
+    url(r'^addReview/$', views.addReview),
+    url(r'^montyhall/$', views.montyhall),
+    url(r'^runbayesnet/$', views.runbayesnet),
+    url(r'^getScore/$', views.getScore),
+    url(r'^initTables/$', views.initTables),
+    url(r'^results/$', views.results)
 ]

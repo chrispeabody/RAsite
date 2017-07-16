@@ -24,19 +24,41 @@ class App(models.Model):
 # List of all CSP's and their information
 class CSP(models.Model):
 	name = models.CharField(max_length=40, primary_key = True)
+	codename = models.CharField(max_length=40)
 
-	fDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)], null = True)
-	uDowntime = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)], null = True)
+	# Opinion information  gathered from review text
+	opPositive = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)], null = True)
+	opNeutral = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)], null = True)
+	opNegative = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)], null = True)
 
-	redundVal = models.IntegerField(validators = [MinValueValidator(1)], null = True)
+	# Average of all star ratings for this CSP
+	avgRating = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)], null = True)
+
+	# ----------------- #
+	# Simulation Bounds #
+	# ----------------- #
+
+
+
+	# -------------- #
+	# Data Graveyard #
+	# -------------- #
+
+	### We may not need the below information, especially if it is collected live ###
+	### That way it doesn't need to be stored. For now, we comment it all out ###
+
+	## Percentage of time in the last thirty days that CSP was up
+	#UptimePercent = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)], null = True)
+	
+	## Number of outages the CSP had in the last 30 days
+	#NumOutages = models.IntegerField(validators = [MinValueValidator(1)], null = True)
+
+	## Number of copies of data the CSP keeps
+	#redundVal = models.IntegerField(validators = [MinValueValidator(1)], null = True)
 
 	def __str__(self):
 		return self.name
-
-	# ADD #
-	# Privacy policy info
-	# Aggregated ratings, if necessary
-	# Any other diagnostics
+		#anon return self.codename
 
 # List of all the locations for each CSP
 class CSPLoc(models.Model):
@@ -53,6 +75,20 @@ class CSPLoc(models.Model):
 
 	# Perhaps modify this to hold private user locations as well
 
+# Category scores, for specific categories
+class CatScore(models.Model):
+	# What CSP is this score about?
+	CSP = models.ForeignKey(
+		'CSP',
+		on_delete=models.CASCADE
+	)
+
+	# What type of score is it
+	type = models.CharField(max_length=12)
+
+	# What is the score in terms of percentage
+	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)])
+
 # Holds any numerical type rating for a CSP
 class Rating(models.Model):
 	# The unique id of the rating. We steal it for use in our database too, so we don't duplicate ratings
@@ -68,7 +104,7 @@ class Rating(models.Model):
 	type = models.CharField(max_length=12)
 
 	# What's the rating in terms of percentage?
-	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
+	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)])
 
 	# Where did we get the rating?
 	source = models.CharField(max_length=100, null = True)
@@ -82,7 +118,7 @@ class Rating(models.Model):
 # Holds any textual feedback for a CSP
 class Review(models.Model):
 	# The unique id of the review. We steal it for use in our database too, so we don't duplicate reviews
-	idNum = models.IntegerField(unique=True, null=False)
+	idNum = models.IntegerField(unique=True, null=True)
 
 	# What CSP is this review about?
 	CSP = models.ForeignKey(
@@ -91,7 +127,7 @@ class Review(models.Model):
 	)
 
 	# The review itself
-	plaintext = models.CharField(max_length=2000, null = True) # Adjust size?
+	plaintext = models.CharField(max_length=20000, null = True) # Adjust size?
 
 	# Where did we get the review?
 	source = models.CharField(max_length=100, null = True)
