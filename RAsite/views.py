@@ -31,6 +31,9 @@ def index(request):
 def about(request):
 	return render(request, 'about.html')
 
+def tutorial(request):
+	return render(request, 'tutorial.html')
+
 #####################
 ### FUNC REQUESTS ###
 #####################
@@ -68,6 +71,118 @@ def initTables(request):
 	CatScore(CSP=csp, type='computing', value=0.84).save()
 	CatScore(CSP=csp, type='security', value=0.9).save()
 	CatScore(CSP=csp, type='performance', value=0.9).save()
+
+	CtrlGrpWeight(ctrlGroup = 'AIS', domain = 'physical', weight = 0.25).save()
+	CtrlGrpWeight(ctrlGroup = 'AIS', domain = 'network', weight = 0.75).save()
+	CtrlGrpWeight(ctrlGroup = 'AIS', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AIS', domain = 'storage', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AIS', domain = 'app', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AIS', domain = 'data', weight = 1).save()
+
+	CtrlGrpWeight(ctrlGroup = 'AAC', domain = 'physical', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AAC', domain = 'network', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AAC', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AAC', domain = 'storage', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AAC', domain = 'app', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'AAC', domain = 'data', weight = 1).save()
+
+	CtrlGrpWeight(ctrlGroup = 'BCR', domain = 'physical', weight = 0.73).save()
+	CtrlGrpWeight(ctrlGroup = 'BCR', domain = 'network', weight = 0.64).save()
+	CtrlGrpWeight(ctrlGroup = 'BCR', domain = 'compute', weight = 0.64).save()
+	CtrlGrpWeight(ctrlGroup = 'BCR', domain = 'storage', weight = 0.64).save()
+	CtrlGrpWeight(ctrlGroup = 'BCR', domain = 'app', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'BCR', domain = 'data', weight = 0.64).save()
+
+	CtrlGrpWeight(ctrlGroup = 'CCC', domain = 'physical', weight = 0.2).save()
+	CtrlGrpWeight(ctrlGroup = 'CCC', domain = 'network', weight = 0.2).save()
+	CtrlGrpWeight(ctrlGroup = 'CCC', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'CCC', domain = 'storage', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'CCC', domain = 'app', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'CCC', domain = 'data', weight = 0.8).save()
+
+	CtrlGrpWeight(ctrlGroup = 'DSI', domain = 'physical', weight = 0).save()
+	CtrlGrpWeight(ctrlGroup = 'DSI', domain = 'network', weight = 0.14).save()
+	CtrlGrpWeight(ctrlGroup = 'DSI', domain = 'compute', weight = 0.71).save()
+	CtrlGrpWeight(ctrlGroup = 'DSI', domain = 'storage', weight = 0.86).save()
+	CtrlGrpWeight(ctrlGroup = 'DSI', domain = 'app', weight = 0.86).save()
+	CtrlGrpWeight(ctrlGroup = 'DSI', domain = 'data', weight = 1).save()
+
+	CtrlGrpWeight(ctrlGroup = 'DCS', domain = 'physical', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'DCS', domain = 'network', weight = 0.44).save()
+	CtrlGrpWeight(ctrlGroup = 'DCS', domain = 'compute', weight = 0.44).save()
+	CtrlGrpWeight(ctrlGroup = 'DCS', domain = 'storage', weight = 0.56).save()
+	CtrlGrpWeight(ctrlGroup = 'DCS', domain = 'app', weight = 0.33).save()
+	CtrlGrpWeight(ctrlGroup = 'DCS', domain = 'data', weight = 0.33).save()
+
+	CtrlGrpWeight(ctrlGroup = 'EKM', domain = 'physical', weight = 0).save()
+	CtrlGrpWeight(ctrlGroup = 'EKM', domain = 'network', weight = 0.75).save()
+	CtrlGrpWeight(ctrlGroup = 'EKM', domain = 'compute', weight = 0.25).save()
+	CtrlGrpWeight(ctrlGroup = 'EKM', domain = 'storage', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'EKM', domain = 'app', weight = 0.75).save()
+	CtrlGrpWeight(ctrlGroup = 'EKM', domain = 'data', weight = 1).save()
+
+	CtrlGrpWeight(ctrlGroup = 'GRM', domain = 'physical', weight = 0.46).save()
+	CtrlGrpWeight(ctrlGroup = 'GRM', domain = 'network', weight = 0.46).save()
+	CtrlGrpWeight(ctrlGroup = 'GRM', domain = 'compute', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'GRM', domain = 'storage', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'GRM', domain = 'app', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'GRM', domain = 'data', weight = 0.55).save()
+
+	CtrlGrpWeight(ctrlGroup = 'HRS', domain = 'physical', weight = 0.64).save()
+	CtrlGrpWeight(ctrlGroup = 'HRS', domain = 'network', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'HRS', domain = 'compute', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'HRS', domain = 'storage', weight = 0.55).save()
+	CtrlGrpWeight(ctrlGroup = 'HRS', domain = 'app', weight = 0.64).save()
+	CtrlGrpWeight(ctrlGroup = 'HRS', domain = 'data', weight = 0.91).save()
+
+	CtrlGrpWeight(ctrlGroup = 'IAM', domain = 'physical', weight = 0.62).save()
+	CtrlGrpWeight(ctrlGroup = 'IAM', domain = 'network', weight = 0.69).save()
+	CtrlGrpWeight(ctrlGroup = 'IAM', domain = 'compute', weight = 0.85).save()
+	CtrlGrpWeight(ctrlGroup = 'IAM', domain = 'storage', weight = 0.85).save()
+	CtrlGrpWeight(ctrlGroup = 'IAM', domain = 'app', weight = 0.92).save()
+	CtrlGrpWeight(ctrlGroup = 'IAM', domain = 'data', weight = 0.85).save()
+
+	CtrlGrpWeight(ctrlGroup = 'IVS', domain = 'physical', weight = 0.54).save()
+	CtrlGrpWeight(ctrlGroup = 'IVS', domain = 'network', weight = 0.77).save()
+	CtrlGrpWeight(ctrlGroup = 'IVS', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'IVS', domain = 'storage', weight = 0.69).save()
+	CtrlGrpWeight(ctrlGroup = 'IVS', domain = 'app', weight = 0.69).save()
+	CtrlGrpWeight(ctrlGroup = 'IVS', domain = 'data', weight = 0.69).save()
+
+	CtrlGrpWeight(ctrlGroup = 'IPY', domain = 'physical', weight = 0.2).save()
+	CtrlGrpWeight(ctrlGroup = 'IPY', domain = 'network', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'IPY', domain = 'compute', weight = 0.8).save()
+	CtrlGrpWeight(ctrlGroup = 'IPY', domain = 'storage', weight = 0.8).save()
+	CtrlGrpWeight(ctrlGroup = 'IPY', domain = 'app', weight = 0.8).save()
+	CtrlGrpWeight(ctrlGroup = 'IPY', domain = 'data', weight = 0.8).save()
+
+	CtrlGrpWeight(ctrlGroup = 'MOS', domain = 'physical', weight = 0.4).save()
+	CtrlGrpWeight(ctrlGroup = 'MOS', domain = 'network', weight = 0.25).save()
+	CtrlGrpWeight(ctrlGroup = 'MOS', domain = 'compute', weight = 0.4).save()
+	CtrlGrpWeight(ctrlGroup = 'MOS', domain = 'storage', weight = 0.15).save()
+	CtrlGrpWeight(ctrlGroup = 'MOS', domain = 'app', weight = 0.65).save()
+	CtrlGrpWeight(ctrlGroup = 'MOS', domain = 'data', weight = 0.35).save()
+
+	CtrlGrpWeight(ctrlGroup = 'SEF', domain = 'physical', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'SEF', domain = 'network', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'SEF', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'SEF', domain = 'storage', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'SEF', domain = 'app', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'SEF', domain = 'data', weight = 1).save()
+
+	CtrlGrpWeight(ctrlGroup = 'STA', domain = 'physical', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'STA', domain = 'network', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'STA', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'STA', domain = 'storage', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'STA', domain = 'app', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'STA', domain = 'data', weight = 1).save()
+
+	CtrlGrpWeight(ctrlGroup = 'TVM', domain = 'physical', weight = 0).save()
+	CtrlGrpWeight(ctrlGroup = 'TVM', domain = 'network', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'TVM', domain = 'compute', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'TVM', domain = 'storage', weight = 0.67).save()
+	CtrlGrpWeight(ctrlGroup = 'TVM', domain = 'app', weight = 1).save()
+	CtrlGrpWeight(ctrlGroup = 'TVM', domain = 'data', weight = 0.33).save()
 
 	return render(request, 'index.html')
 
@@ -112,21 +227,27 @@ def getScore(request):
 
 				updateAverages()
 
+			cspList = CSP.objects.all()
+			chartDict = {}
+			for csp in cspList:
+				chartDict[csp.name] = results(csp.name, form.cleaned_data['serviceType'])
+
 			# Here is where the magic will happen.
-			pass
+			chartInfo = results(form.cleaned_data['currcsp'], form.cleaned_data['serviceType'])
+			return render(request, 'results.html', chartInfo)
 
 	else:
 		form = netInfoForm()
 
-	return render(request, 'infoform.html', {'form': form})
+		return render(request, 'infoform.html', {'form': form})
 
 # Experimenting with matrices
-def results(request):
+def results(cspname, serviceType):
 	# Calculates user quality of experience
-	uQoE, qoeMat = userQoE('Rackspace')
+	uQoE, qoeMat = userQoE(cspname)
 	nQoS, qosMat = networkQoS()
 	cSec, secMat = cloudSecurity()
-	cst, costMat = cost()
+	cst, costMat = cost(serviceType)
 
 	# average the nodes for now
 	trust = bayes(0.5, uQoE, nQoS, cSec, cst)
@@ -158,8 +279,7 @@ def results(request):
 		'storeSize':costMat[5, 10],
 		'OS':costMat[6, 10],
 		'bandwidth':costMat[7, 11],
-		'usageBased':costMat[8, 12],
-		'tieredBased':costMat[9, 12],
+ 		'tieredBased':costMat[9, 12],
 		'dataConsumed':costMat[0, 8],
 		'transProc':costMat[1, 8],
 		'APIreq':costMat[2, 8],
@@ -212,7 +332,7 @@ def results(request):
 		'latency':qosMat[2, 9],
 	}
 
-	return render(request, 'results.html', chartInfo)
+	return chartInfo
 
 # this runs our bayes net
 # need to add in more params for user input

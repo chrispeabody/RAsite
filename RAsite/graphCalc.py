@@ -31,16 +31,26 @@ def unZero(num):
 #	newProb = numAndDen / (numAndDen + denom2)
 #	return newProb
 
-# Bad bayesian network calculation
+# Medium bayesian network calculation
 def bayes(priorBelief, *args):
 	num = priorBelief
 	for arg in args:
-		num *= arg
+		num += arg
+
+	num = num / (1+len(args))
 
 	return num
 
+# Bad bayesian network calculation
+#def bayes(priorBelief, *args):
+#	num = priorBelief
+#	for arg in args:
+#		num *= arg
+
+#	return num
+
 # Calculates the cost node
-def cost():
+def cost(serviceType):
 	# NODE NUMBERS #
 	#0 - Data Consumed
 	#1 - Transactions Processed
@@ -135,7 +145,14 @@ def cost():
 		mat[12, 13] = bayes(mat[12, 13], mat[8, 12], mat[9, 12])
 
 	def calcCost(mat):
-		mat[13, 13] = bayes(mat[13, 13], mat[10, 13], mat[11, 13], mat[12, 13])
+		if serviceType == 'Infrustructure as a Service':
+			mat[13, 13] = mat[10, 13]
+		elif serviceType == 'Platform as a Service':
+			mat[13, 13] = mat[11, 13]
+		elif serviceType == 'Software as a Service':
+			mat[13, 13] = mat[12, 13]
+		else:
+			print("NO VALID SERVICE TYPE")
 
 	initMat(a)
 	calcUsageBased(a)

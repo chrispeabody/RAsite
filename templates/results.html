@@ -23,9 +23,9 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {packages:["orgchart"]});
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawCharts);
 
-        function drawChart() {
+        function drawCharts() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Node');
             data.addColumn('string', 'Parent');
@@ -35,7 +35,7 @@
             data.addRows([
                 [{v:'Trust', f:'Trust [{{ trust }}]'}, '', 'Trust Score'],
                 [{v:'Cost', f:'Cost [{{ cost }}]'}, 'Trust', 'Cost Score'],
-                    [{v:'IaaS', f:'IaaS [{{ iaas }}]'}, 'Cost', 'Infrustructure as a Service Score'],
+                    /*[{v:'IaaS', f:'IaaS [{{ iaas }}]'}, 'Cost', 'Infrustructure as a Service Score'],
                         [{v:'Number of Cores', f:'Number of Cores [{{ numCores }}]'}, 'IaaS', 'Number of Cores Score'],
                         [{v:'Disk I/O', f:'[{{ diskIO }}]'}, 'IaaS', 'Disk I/O Score'],
                         [{v:'Storage Size', f:'Storage Size [{{ storeSize }}]'}, 'IaaS', 'Storage Size Score'],
@@ -48,9 +48,9 @@
                             [{v:'Data Consumed', f:'Data Consumed [{{ dataConsumed }}]'}, 'Usage Based', 'dataConsumed Score'],
                             [{v:'Transactions Processed', f:'Transactions Processed [{{ transProc }}]'}, 'Usage Based', 'Transactions Processed Score'],
                             [{v:'API Requests', f:'API Requests [{{ APIreq }}]'}, 'Usage Based', 'API Requests Score'],
-                        [{v:'Tiered Based', f:'Tiered Based [{{ tieredBased }}]'}, 'SaaS', 'Tiered Based Score'],
+                        [{v:'Tiered Based', f:'Tiered Based [{{ tieredBased }}]'}, 'SaaS', 'Tiered Based Score'],*/
                 [{v:'Network QoS', f:'Network QoS [{{ QoS }}]'}, 'Trust', 'Network Quality of Service Score'],
-                    [{v:'Throughput', f:'Throughput [{{ throughput }}]'}, 'Network QoS', 'Throughput Score'],
+                    /*[{v:'Throughput', f:'Throughput [{{ throughput }}]'}, 'Network QoS', 'Throughput Score'],
                         [{v:'VM Type', f:'VM Type [{{ VMtype }}]'}, 'Throughput', 'VM Type Score'],
                         [{v:'VM Size', f:'VM Size [{{ VMsize }}]'}, 'Throughput', 'VM Size Score'],
                         [{v:'Network Bandwidth', f:'Network Bandwidth [{{ netBandwidth }}]'}, 'Throughput', 'Network Bandwidth Score'],
@@ -66,9 +66,9 @@
                     [{v:'Availability', f:'Availability [{{ availability }}]'}, 'Network QoS', 'Availability Score'],
                         [{v:'Uptime', f:'Uptime [{{ uptime }}]'}, 'Availability', 'Uptime Score'],
                         [{v:'Location', f:'Location [{{ location }}]'}, 'Availability', 'Location Score'],
-                        [{v:'Number of Outages', f:'Number of Outages [{{ numOutages }}]'}, 'Availability', 'Number of Outages Score'],
-                [{v:'User QoE', f:'User QoE [{{ QoS }}]'}, 'Trust', 'User Quality of Experience Score'],
-                [{v:'Cloud Security', f:'Cloud Security [{{ security }}]'}, 'Trust', 'Cloud Security Score']
+                        [{v:'Number of Outages', f:'Number of Outages [{{ numOutages }}]'}, 'Availability', 'Number of Outages Score'],*/
+                [{v:'User QoE', f:'User QoE [{{ QoE }}]'}, 'Trust', 'User Quality of Experience Score'],
+                [{v:'Cloud Security', f:'Cloud Security [{{ cloudSec }}]'}, 'Trust', 'Cloud Security Score']
             ]);
 
             // Create the chart.

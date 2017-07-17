@@ -9,70 +9,74 @@
 <header>
     <div class="header-content">
         <div class="header-content-inner">
-            <h1 id="homeHeading">Please enter the required information to obtain the trust score</h1>
+            <h1 id="homeHeading">Please enter the required information below to obtain a trust score</h1>
             <hr>
-
-            <form action="/getScore/" method="post" class = "form-horizontal">
-                {% csrf_token %}
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">What CSP do you use now?</span>
-                    {{ form.currcsp }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Your Experience</span>
-                    <input name="reviewtext" type="text" class="form-control" placeholder="Enter a review of your experience with your the cloud service provider. Leave blank if you have no review." aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">What type of service do you need?</span>
-                    {{ form.serviceType }}
-                </div>
-                <hr>
-                <h2>Please enter how important each of these aspects of a CSP are to you in terms of security.</h2>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Physical Infrastructure</span>
-                    {{ form.prefPhysInfra }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Networking</span>
-                    {{ form.prefNet }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Computation</span>
-                    {{ form.prefComp }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Storage</span>
-                    {{ form.prefStorage }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Apps on the platform</span>
-                    {{ form.prefPlatApps }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Data</span>
-                    {{ form.prefData }}
-                </div>
-                <br>
-
-                <!--
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon2">Some other info</span>
-                    <input name="reviewtext" type="text" class="form-control" placeholder="Test test." aria-describedby="basic-addon1">
-                </div>
-                -->
-                <br>
-                <button type="submit" value="Submit" class="btn btn-default">Submit</button>
-            </form>
-
         </div>
     </div>
 </header>
+
+<section class='bg-primary'>
+    <div class='container'>
+        <form action="/getScore/" method="post" class = "form-horizontal">
+            {% csrf_token %}
+            <h2>Basic information:</h2>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">What CSP do you use now?</span>
+                {{ form.currcsp }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Your Experience</span>
+                <input name="reviewtext" type="text" class="form-control" placeholder="Enter a review of your experience with your the cloud service provider. Leave blank if you have no review." aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">What type of service do you need?</span>
+                {{ form.serviceType }}
+            </div>
+            <h2>Security aspect importance preferences:</h2>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Physical Infrastructure</span>
+                {{ form.prefPhysInfra }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Networking</span>
+                {{ form.prefNet }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Computation</span>
+                {{ form.prefComp }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Storage</span>
+                {{ form.prefStorage }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Apps on the platform</span>
+                {{ form.prefPlatApps }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Data</span>
+                {{ form.prefData }}
+            </div>
+            <br>
+
+            <!--
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">Some other info</span>
+                <input name="reviewtext" type="text" class="form-control" placeholder="Test test." aria-describedby="basic-addon1">
+            </div>
+            -->
+            <br>
+            <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</section>
+
 
 {% endblock %}

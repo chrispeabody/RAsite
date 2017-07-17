@@ -89,6 +89,17 @@ class CatScore(models.Model):
 	# What is the score in terms of percentage
 	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)])
 
+# Holds the weights for the cloud security control groups
+class CtrlGrpWeight(models.Model):
+	# Which control group (AIS, AAC, BCR, etc)
+	ctrlGroup = models.CharField(max_length=3)
+
+	# Domain (Data, App, Storage, etc)
+	domain = models.CharField(max_length=8)
+
+	# the actual weight to store
+	weight = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)])
+	
 # Holds any numerical type rating for a CSP
 class Rating(models.Model):
 	# The unique id of the rating. We steal it for use in our database too, so we don't duplicate ratings

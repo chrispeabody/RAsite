@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^runbayesnet/$', views.runbayesnet),
     url(r'^getScore/$', views.getScore),
     url(r'^initTables/$', views.initTables),
-    url(r'^results/$', views.results)
+    url(r'^results/$', views.results),
+    url(r'^tutorial/$', views.tutorial)
 ]

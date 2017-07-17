@@ -25,7 +25,7 @@ class netInfoForm(forms.ModelForm):
 	currcsp.widget.attrs['class'] = 'form-control'
 
 	# Review, if the user has one
-	reviewtext = forms.CharField(max_length = 2000)
+	reviewtext = forms.CharField(max_length = 2000, required = False)
 
 	# What type of service they need
 	typ = [(0, 'Infrustructure as a Service'),
