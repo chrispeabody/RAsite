@@ -6,29 +6,28 @@
 
 {% block content %}
 
-<header>
-    <div class="header-content">
-        <div class="header-content-inner">
-            <h1 id="homeHeading">Add a new review to our database</h1>
-            <hr>
+<img src="../static/img/banner.jpg" style="height:400px">
 
-            <form action="/addReview/" method="post" class = "form-horizontal">
-                {% csrf_token %}
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Cloud service provider</span>
-                    {{ form.cspname }}
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon2">Your review</span>
-                    <input name="reviewtext" type="text" class="form-control" placeholder="Enter your experience with the cloud service provider!" aria-describedby="basic-addon1">
-                </div>
-                <br>
-                <button type="submit" value="Submit" class="btn btn-default">Submit</button>
-            </form>
+<section class='bg-primary'>
+    <div class='container'>
+        <h1 id="homeHeading">Add a new review to our database:</h1>
 
-        </div>
+        <form action="/addReview/" method="post" class = "form-horizontal">
+            {% csrf_token %}
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Cloud service provider</span>
+                {{ form.cspname }}
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">Your review</span>
+                <input name="reviewtext" type="text" class="form-control" placeholder="Enter your experience with the cloud service provider!" aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+        </form>
     </div>
-</header>
+</section>
+
 
 {% endblock %}

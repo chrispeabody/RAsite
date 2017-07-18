@@ -33,17 +33,21 @@ def unZero(num):
 
 # Medium bayesian network calculation
 def bayes(priorBelief, *args):
-	num = priorBelief
+	subList = []
 	for arg in args:
-		num += arg
+		subList.append(arg*priorBelief*2)
 
-	num = num / (1+len(args))
+	num = 0
+	for item in subList:
+		num += item
+
+	num = num / (len(args))
 
 	return num
 
 # Bad bayesian network calculation
 #def bayes(priorBelief, *args):
-#	num = priorBelief
+#	num = 2*priorBelief
 #	for arg in args:
 #		num *= arg
 

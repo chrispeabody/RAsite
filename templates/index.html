@@ -12,15 +12,29 @@
 {% endblock %}
 
 {% block content %}
-    <section class="bg-primary" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Welcome to the home page!</h2>
-                    <hr class="light">
-                    <p class="text-faded">Good morning. Here is the main body of the opening page.</p>
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img src="../static/img/borderdots.png" style="height:50px;width:500px;">
+                    <h1>Online Risk Assessment of Cloud Service Providers</h1>
+                    <img src="../static/img/borderdots.png" style="height:50px;width:500px;">
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</header>
+
+<section class="bg-primary" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <h1 class="section-heading">Welcome</h1>
+                <hr class="light">
+                <p class="text-faded">This project has been carried out as a part of the 2017 <a href="http://web.mst.edu/~nsfreu/NSFREU/Home.html">MST REU program</a>. To demo the tool, use any of the links on the navigation bar above.</p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

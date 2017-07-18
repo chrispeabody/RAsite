@@ -13,7 +13,7 @@
     <title>RAsite | {% block title %}{% endblock %} </title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
     <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
 
     <!-- Theme CSS -->
-    <link href="{% static 'css/creative.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/creative.css' %}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,9 +44,15 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll"  href="/">
-                    <span type="button" class="glyphicon glyphicon-home" aria-label="Home"></span>
-                </a>
+                        <a class="navbar-brand page-scroll"  href="http://www.mst.edu">
+                            <div class="panel panel-default">
+
+                                <div class="panel-body">
+                                    <!--<img src="../static/img/linelogo.png" style="height:20px;">-->
+                                    <img src="../static/img/logo.png" style="height:50px;">
+                                </div>
+                            </div>
+                        </a>
                 <a class="navbar-brand page-scroll" href="#page-top">{% block navtitle %}{% endblock %}</a>
             </div>
 
@@ -54,16 +60,21 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="/getScore/">Assess Trust</a>
+                        <a class="navbar-brand page-scroll"  href="/">
+                            <span type="button" class="glyphicon glyphicon-home" aria-label="Home"></span>
+                        </a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/addReview/">New Review</a>
+                        <a class="page-scroll" href="/getScore/">Demo Tool</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/addReview/">Add Review</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/about">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/tutorial">Tutorial</a>
+                        <a class="page-scroll" href="/tutorial">Demo Tutorial</a>
                     </li>
                     
                      {% if request.user.is_authenticated %}
@@ -86,6 +97,15 @@
     </nav>
 
     {% block content %}{% endblock %}
+
+    <aside class="bg-dark">
+        <div class="container text-center">
+            <h4>MS&T Computer Science Department</h4>
+            <h6>500 West 15th Street, 325 Computer Science Bldg., Rolla, MO 65409</h6>
+            <h6>(573) 341-4491</h6>
+            <h6>csdept@mst.edu</h6>
+        </div>
+    </aside>
 
     <!-- jQuery -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

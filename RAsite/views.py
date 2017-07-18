@@ -227,11 +227,6 @@ def getScore(request):
 
 				updateAverages()
 
-			cspList = CSP.objects.all()
-			chartDict = {}
-			for csp in cspList:
-				chartDict[csp.name] = results(csp.name, form.cleaned_data['serviceType'])
-
 			# Here is where the magic will happen.
 			chartInfo = results(form.cleaned_data['currcsp'], form.cleaned_data['serviceType'])
 			return render(request, 'results.html', chartInfo)
