@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogapp.apps.BlogappConfig',
-    'CSPtool.apps.CSPtoolConfig'
+    'CSPtool.apps.CSPtoolConfig',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

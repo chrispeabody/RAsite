@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from .forms import UserForm, newReviewForm, netInfoForm
-from CSPtool.models import CSP, Review, Rating, CatScore
+from CSPtool.models import CSP, Review, Rating, CatScore, TrustScore
 from datetime import datetime
 
 # Crawler imports
@@ -229,6 +229,16 @@ def getScore(request):
 
 			# Here is where the magic will happen.
 			chartInfo = results(form.cleaned_data['currcsp'], form.cleaned_data['serviceType'])
+			
+			# If the user is logged in, we should store the scores
+			if request.user.is_authenticated:
+				TrustScore(user=request.user,
+					CSP=form.cleaned_data['currcsp'],
+					value=chartInfo['trust']).save()
+
+				prevScores = TrustScore.objects.filter(user=request.user)
+				chartInfo['prevScores'] = prevScores
+
 			return render(request, 'results.html', chartInfo)
 
 	else:
@@ -263,68 +273,68 @@ def results(cspname, serviceType):
 	print(cst)
 
 	chartInfo = {
-		'trust':trust,
+		'trust':round(trust, 2),
 
-		'cost':costMat[13, 13],
-		'iaas':costMat[10, 13],
-		'paas':costMat[11, 13],
-		'saas':costMat[12, 13],
-		'numCores':costMat[3, 10],
-		'diskIO':costMat[4, 10],
-		'storeSize':costMat[5, 10],
-		'OS':costMat[6, 10],
-		'bandwidth':costMat[7, 11],
- 		'tieredBased':costMat[9, 12],
-		'dataConsumed':costMat[0, 8],
-		'transProc':costMat[1, 8],
-		'APIreq':costMat[2, 8],
+		'cost':round(costMat[13, 13], 2),
+		#'iaas':costMat[10, 13],
+		#'paas':costMat[11, 13],
+		#'saas':costMat[12, 13],
+		#'numCores':costMat[3, 10],
+		#'diskIO':costMat[4, 10],
+		#'storeSize':costMat[5, 10],
+		#'OS':costMat[6, 10],
+		#'bandwidth':costMat[7, 11],
+ 		#'tieredBased':costMat[9, 12],
+		#'dataConsumed':costMat[0, 8],
+		#'transProc':costMat[1, 8],
+		#'APIreq':costMat[2, 8],
 
-		'QoE':qoeMat[6, 6],
-		'starRating':qoeMat[4, 6],
-		'reviews':qoeMat[5, 6],
-		'support':qoeMat[0, 4],
-		'computing':qoeMat[1, 4],
-		'security':qoeMat[2, 4],
-		'performance':qoeMat[3, 4],
+		'QoE':round(qoeMat[6, 6], 2),
+		#'starRating':qoeMat[4, 6],
+		#'reviews':qoeMat[5, 6],
+		#'support':qoeMat[0, 4],
+		#'computing':qoeMat[1, 4],
+		#'security':qoeMat[2, 4],
+		#'performance':qoeMat[3, 4],
 
-		'cloudSec':secMat[18, 18],
-		'STARscore':secMat[16, 18],
-		'controlGrps':secMat[17, 18],
-		'AAC':secMat[0, 17],
-		'IAM':secMat[1, 17],
-		'GRM':secMat[2, 17],
-		'CCC':secMat[3, 17],
-		'HRS':secMat[4, 17],
-		'IVS':secMat[5, 17],
-		'SEF':secMat[6, 17],
-		'DSI':secMat[7, 17],
-		'TVM':secMat[8, 17],
-		'BCR':secMat[9, 17],
-		'STA':secMat[10, 17],
-		'IPY':secMat[11, 17],
-		'DCS':secMat[12, 17],
-		'EKM':secMat[13, 17],
-		'MOS':secMat[14, 17],
-		'AIS':secMat[15, 17],
+		'cloudSec':round(secMat[18, 18], 2),
+		#'STARscore':secMat[16, 18],
+		#'controlGrps':secMat[17, 18],
+		#'AAC':secMat[0, 17],
+		#'IAM':secMat[1, 17],
+		#'GRM':secMat[2, 17],
+		#'CCC':secMat[3, 17],
+		#'HRS':secMat[4, 17],
+		#'IVS':secMat[5, 17],
+		#'SEF':secMat[6, 17],
+		#'DSI':secMat[7, 17],
+		#'TVM':secMat[8, 17],
+		#'BCR':secMat[9, 17],
+		#'STA':secMat[10, 17],
+		#'IPY':secMat[11, 17],
+		#'DCS':secMat[12, 17],
+		#'EKM':secMat[13, 17],
+		#'MOS':secMat[14, 17],
+		#'AIS':secMat[15, 17],
 
-		'QoS':qosMat[17, 17],
-		'throughput':qosMat[14, 17],
-		'performance':qosMat[15, 17],
-		'availability':qosMat[16, 17],
-		'VMtype':qosMat[3, 14],
-		'VMsize':qosMat[4, 14],
-		'netBandwidth':qosMat[5, 14],
-		'multiTen':qosMat[6, 14],
-		'globLat':qosMat[7, 15],
-		'totRuntime':qosMat[8, 15],
-		'responseTime':qosMat[9, 15],
-		'CPUusage':qosMat[10, 15],
-		'uptime':qosMat[11, 16],
-		'location':qosMat[12, 16],
-		'numOutages':qosMat[13, 16],
-		'uplink':qosMat[0, 9],
-		'downlink':qosMat[1, 9],
-		'latency':qosMat[2, 9],
+		'QoS':round(qosMat[17, 17], 2),
+		#'throughput':qosMat[14, 17],
+		#'performance':qosMat[15, 17],
+		#'availability':qosMat[16, 17],
+		#'VMtype':qosMat[3, 14],
+		#'VMsize':qosMat[4, 14],
+		#'netBandwidth':qosMat[5, 14],
+		#'multiTen':qosMat[6, 14],
+		#'globLat':qosMat[7, 15],
+		#'totRuntime':qosMat[8, 15],
+		#'responseTime':qosMat[9, 15],
+		#'CPUusage':qosMat[10, 15],
+		#'uptime':qosMat[11, 16],
+		#'location':qosMat[12, 16],
+		#'numOutages':qosMat[13, 16],
+		#'uplink':qosMat[0, 9],
+		#'downlink':qosMat[1, 9],
+		#'latency':qosMat[2, 9],
 	}
 
 	return chartInfo

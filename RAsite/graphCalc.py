@@ -149,14 +149,18 @@ def cost(serviceType):
 		mat[12, 13] = bayes(mat[12, 13], mat[8, 12], mat[9, 12])
 
 	def calcCost(mat):
-		if serviceType == 'Infrustructure as a Service':
+		# IaaS
+		if serviceType == 0:
 			mat[13, 13] = mat[10, 13]
-		elif serviceType == 'Platform as a Service':
+		# PaaS
+		elif serviceType == 1:
 			mat[13, 13] = mat[11, 13]
-		elif serviceType == 'Software as a Service':
+		# SaaS
+		elif serviceType == 2:
 			mat[13, 13] = mat[12, 13]
 		else:
-			print("NO VALID SERVICE TYPE")
+			print("NO VALID SERVICE TYPE\n")
+
 
 	initMat(a)
 	calcUsageBased(a)

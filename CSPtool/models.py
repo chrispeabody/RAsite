@@ -5,25 +5,27 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 # List of each app and their information
+###############################################
+# DEPRICATED: THIS ENTIRE CLASS IS NEVER USED #
+###############################################
 class App(models.Model):
 	user = models.ForeignKey(
 		User, # If we try to exapand user, this could cause issues?
 		on_delete=models.CASCADE,
 	)
 
-	currCSP = models.ForeignKey(
-		'CSP',
-		on_delete=models.CASCADE,
-	)
+	currCSP = models.CharField(max_length=40) #models.ForeignKey(
+	#	'CSP',
+	#	on_delete=models.CASCADE,
+	#)
 
 	locX = models.FloatField()
 	locY = models.FloatField()
 
-	# ADD OTHER DIAGNOSTIC INFO #
 
 # List of all CSP's and their information
 class CSP(models.Model):
-	name = models.CharField(max_length=40, primary_key = True)
+	name = models.CharField(max_length=40, primary_key= True)
 	codename = models.CharField(max_length=40)
 
 	# Opinion information  gathered from review text
@@ -38,7 +40,8 @@ class CSP(models.Model):
 	# Simulation Bounds #
 	# ----------------- #
 
-
+	# Future work: For anything that needs to be randomized, do it once and store it here
+	# for each given CSP
 
 	# -------------- #
 	# Data Graveyard #
@@ -58,14 +61,17 @@ class CSP(models.Model):
 
 	def __str__(self):
 		return self.name
-		#anon return self.codename
+		#return self.codename
 
 # List of all the locations for each CSP
+###############################################
+# DEPRICATED: THIS ENTIRE CLASS IS NEVER USED #
+###############################################
 class CSPLoc(models.Model):
-	CSP = models.ForeignKey(
-		'CSP',
-		on_delete=models.CASCADE
-	)
+	CSP = models.CharField(max_length=40) #models.ForeignKey(
+	#	'CSP',
+	#	on_delete=models.CASCADE
+	#)
 
 	locX = models.FloatField()
 	locY = models.FloatField()
@@ -78,10 +84,10 @@ class CSPLoc(models.Model):
 # Category scores, for specific categories
 class CatScore(models.Model):
 	# What CSP is this score about?
-	CSP = models.ForeignKey(
-		'CSP',
-		on_delete=models.CASCADE
-	)
+	CSP = models.CharField(max_length=40) #models.ForeignKey(
+	#	'CSP',
+	#	on_delete=models.CASCADE
+	#)
 
 	# What type of score is it
 	type = models.CharField(max_length=12)
@@ -99,17 +105,17 @@ class CtrlGrpWeight(models.Model):
 
 	# the actual weight to store
 	weight = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(1.0)])
-	
+
 # Holds any numerical type rating for a CSP
 class Rating(models.Model):
 	# The unique id of the rating. We steal it for use in our database too, so we don't duplicate ratings
 	idNum = models.IntegerField(unique=True, null=False)
 
 	# What CSP is this rating about?
-	CSP = models.ForeignKey(
-		'CSP',
-		on_delete=models.CASCADE
-	)
+	CSP = models.CharField(max_length=40) #models.ForeignKey(
+	#	'CSP',
+	#	on_delete=models.CASCADE
+	#)
 
 	# What type of rating is it?
 	type = models.CharField(max_length=12)
@@ -132,10 +138,10 @@ class Review(models.Model):
 	idNum = models.IntegerField(unique=True, null=True)
 
 	# What CSP is this review about?
-	CSP = models.ForeignKey(
-		'CSP',
-		on_delete=models.CASCADE
-	)
+	CSP = models.CharField(max_length=40) #models.ForeignKey(
+	#	'CSP',
+	#	on_delete=models.CASCADE
+	#)
 
 	# The review itself
 	plaintext = models.CharField(max_length=20000, null = True) # Adjust size?
@@ -158,10 +164,10 @@ class TrustScore(models.Model):
 	)
 
 	# What CSP is this score for?
-	CSP = models.ForeignKey(
-		'CSP',
-		on_delete=models.CASCADE
-	)
+	CSP = models.CharField(max_length=40) #models.ForeignKey(
+	#	'CSP',
+	#	on_delete=models.CASCADE
+	#)
 
 	# What is the value of the score?
 	value = models.FloatField(validators = [MinValueValidator(0.0), MaxValueValidator(100.0)])
