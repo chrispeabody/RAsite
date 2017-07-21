@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from .forms import UserForm, newReviewForm, netInfoForm
-from CSPtool.models import CSP, Review, Rating, CatScore, TrustScore
+from CSPtool.models import CSP, Review, Rating, CatScore, TrustScore, CtrlGrpWeight
 from datetime import datetime
 
 # Crawler imports
@@ -43,6 +43,10 @@ def tutorial(request):
 # Only run after aggReviews
 def initTables(request):
 	csp = CSP.objects.get(name='Amazon Web Services')
+	print("name: ")
+	print(csp.name)
+	print("codename: ")
+	print(csp.codename)
 	CatScore(CSP=csp, type='support', value=0.95).save()
 	CatScore(CSP=csp, type='computing', value=0.99).save()
 	CatScore(CSP=csp, type='security', value=1.0).save()
@@ -228,7 +232,13 @@ def getScore(request):
 				updateAverages()
 
 			# Here is where the magic will happen.
-			chartInfo = results(form.cleaned_data['currcsp'], form.cleaned_data['serviceType'])
+			domPref = {'physical': form.cleaned_data['prefPhysInfra'],
+				'network': form.cleaned_data['prefNet'],
+				'compute': form.cleaned_data['prefComp'],
+				'storage': form.cleaned_data['prefStorage'],
+				'app': form.cleaned_data['prefPlatApps'],
+				'data': form.cleaned_data['prefData']}
+			chartInfo = results(form.cleaned_data['currcsp'], form.cleaned_data['serviceType'], domPref)
 			
 			# If the user is logged in, we should store the scores
 			if request.user.is_authenticated:
@@ -247,11 +257,11 @@ def getScore(request):
 		return render(request, 'infoform.html', {'form': form})
 
 # Experimenting with matrices
-def results(cspname, serviceType):
+def results(cspname, serviceType, domPref):
 	# Calculates user quality of experience
 	uQoE, qoeMat = userQoE(cspname)
 	nQoS, qosMat = networkQoS()
-	cSec, secMat = cloudSecurity()
+	cSec, secMat = cloudSecurity(domPref)
 	cst, costMat = cost(serviceType)
 
 	# average the nodes for now

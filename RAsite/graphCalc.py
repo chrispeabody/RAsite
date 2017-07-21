@@ -1,7 +1,7 @@
 # graphCalc.py
 # Holds all the functionality for OUR graph
 
-from CSPtool.models import CSP, Review, Rating, CatScore
+from CSPtool.models import CSP, Review, Rating, CatScore, CtrlGrpWeight
 import numpy
 import random
 random.seed()
@@ -35,7 +35,7 @@ def unZero(num):
 def bayes(priorBelief, *args):
 	subList = []
 	for arg in args:
-		subList.append(arg*priorBelief*2)
+		subList.append(arg*priorBelief)
 
 	num = 0
 	for item in subList:
@@ -150,13 +150,13 @@ def cost(serviceType):
 
 	def calcCost(mat):
 		# IaaS
-		if serviceType == 0:
+		if serviceType == '0':
 			mat[13, 13] = mat[10, 13]
 		# PaaS
-		elif serviceType == 1:
+		elif serviceType == '1':
 			mat[13, 13] = mat[11, 13]
 		# SaaS
-		elif serviceType == 2:
+		elif serviceType == '2':
 			mat[13, 13] = mat[12, 13]
 		else:
 			print("NO VALID SERVICE TYPE\n")
@@ -203,7 +203,7 @@ def userQoE(cspname):
 		mat[3, 4] = unZero(mat[3, 4])
 
 		#6 - Review score
-		csp = CSP.objects.get(name=cspname)
+		csp = CSP.objects.get(codename=cspname)
 		revscore = (csp.opPositive - csp.opNegative + 1) / 2
 		mat[5, 6] = revscore
 		mat[5, 6] = unZero(mat[5, 6])
@@ -213,7 +213,7 @@ def userQoE(cspname):
 		# ------------------- #
 
 		#4 - Star rating
-		mat[4, 6] = CSP.objects.get(name=cspname).avgRating
+		mat[4, 6] = CSP.objects.get(codename=cspname).avgRating
 		mat[4, 6] = unZero(mat[4, 6])
 
 		#6 - Reputation
@@ -359,7 +359,7 @@ def networkQoS():
 	return (a[17, 17], a)
 
 # Calculates the security of the cloud
-def cloudSecurity():
+def cloudSecurity(domPref):
 	# NODE NUMBERS #
 	#0 - AAC
 	#1 - IAM
@@ -401,82 +401,82 @@ def cloudSecurity():
 		#0 - AAC
 		sz = 12
 		ynn = yesNoNa(sz)
-		mat[0, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[0, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#1 - IAM
 		sz = 40
 		ynn = yesNoNa(sz)
-		mat[1, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[1, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#2 - GRM
 		sz = 22
 		ynn = yesNoNa(sz)
-		mat[2, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[2, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#3 - CCC
 		sz = 10
 		ynn = yesNoNa(sz)
-		mat[3, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[3, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#4 - HRS
 		sz = 24
 		ynn = yesNoNa(sz)
-		mat[4, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[4, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#5 - IVS
 		sz = 33
 		ynn = yesNoNa(sz)
-		mat[5, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[5, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#6 - SEF
 		sz = 13
 		ynn = yesNoNa(sz)
-		mat[6, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[6, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#7 - DSI
 		sz = 17
 		ynn = yesNoNa(sz)
-		mat[7, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[7, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#8 - TVM
 		sz = 10
 		ynn = yesNoNa(sz)
-		mat[8, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[8, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#9 - BCR
 		sz = 22
 		ynn = yesNoNa(sz)
-		mat[9, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[9, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 		
 		#10 - STA
 		sz = 20
 		ynn = yesNoNa(sz)
-		mat[10, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[10, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#11 - IPY
 		sz = 8
 		ynn = yesNoNa(sz)
-		mat[11, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[11, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 		
 		#12 - DCS
 		sz = 11
 		ynn = yesNoNa(sz)
-		mat[12, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[12, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 		
 		#13 - EKM
 		sz = 14
 		ynn = yesNoNa(sz)
-		mat[13, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[13, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 		
 		#14 - MOS
 		sz = 29
 		ynn = yesNoNa(sz)
-		mat[14, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[14, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 
 		#15 - AIS
 		sz = 9
 		ynn = yesNoNa(sz)
-		mat[15, 18] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
+		mat[15, 17] = ((ynn[0] / sz) - (ynn[1] / sz) + 1) / 2
 		
 		#16 - Overall STAR Score
 		sz = 295
@@ -495,14 +495,45 @@ def cloudSecurity():
 
 	# VVV THIS CALCULATION NEEDS TO BE DONE  VVV #
 	def calcControlGroupScores(mat):
+		grpNames = ['AAC', 'IAM', 'GRM', 'CCC', 'HRS', 'IVS', 'SEF', 'DSI',
+			'TVM', 'BCR', 'STA', 'IPY', 'DCS', 'EKM', 'MOS', 'AIS']
+		domains = ['physical', 'network', 'compute', 'storage', 'app', 'data']
+
+		num = 0
+		den = 0
+		for i, grp in enumerate(grpNames):
+			weight = 0
+			for dom in domains:
+				weight += CtrlGrpWeight.objects.get(ctrlGroup = grp, domain = dom).weight * float(domPref[dom])
+
+			num += mat[i, 17] * weight
+			den += weight
+
+		score = num / den
+
+		if score > 1 or score < 0:
+			print("*** Control group caluclation was out of range: ")
+			print(score)
+			print(" ***")
+
+		mat[17, 18]= score
+
 		#17 - Control group scores
-		mat[17, 18] = (mat[0, 18] + mat[1, 18] + mat[2, 18] + mat[3, 18] +
-			mat[4, 18] + mat[5, 18] + mat[6, 18] + mat[7, 18] +
-			mat[8, 18] + mat[9, 18] + mat[10, 18] + mat[11, 18] +
-			mat[12, 18] + mat[13, 18] + mat[14, 18] + mat[15, 18]) / 16 # average for now
+		#mat[17, 18] = (mat[0, 18] + mat[1, 18] + mat[2, 18] + mat[3, 18] +
+		#	mat[4, 18] + mat[5, 18] + mat[6, 18] + mat[7, 18] +
+		#	mat[8, 18] + mat[9, 18] + mat[10, 18] + mat[11, 18] +
+		#	mat[12, 18] + mat[13, 18] + mat[14, 18] + mat[15, 18]) / 16 # average for now
 
 	def calcCloudSecurity(mat):
-		mat[18, 18] = bayes(mat[18, 18], mat[16, 18], mat[17, 18])
+		noPref = True
+		for pref in domPref:
+			if domPref[pref] != '0':
+				noPref = False
+
+		if noPref:
+			mat[18, 18] = mat[16, 18]
+		else:
+			mat[18, 18] = mat[17, 18]
 
 	initMat(a)
 	calcControlGroupScores(a)
